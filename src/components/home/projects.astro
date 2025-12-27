@@ -1,0 +1,70 @@
+---
+import ImageSisReport from '../../assets/projects/sisreport.jpg'
+---
+
+<section class="px-4 grid grid-cols-4 gap-4 max-w-7xl mx-auto mt-20">
+  <div class="flex flex-col gap-2 justify-between">
+    <div class="flex flex-col gap-2">
+      <div>
+        <span class="border rounded-sm px-2 text-sm">Proyecto</span>
+      </div>
+
+      <h2 class="text-2xl font-semibold">Nombre del proyecto</h2>
+
+      <div class="overflow-y-auto h-40">
+        <p class="text-sm">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum
+          obcaecati nisi aliquid ex natus recusandae, dolores a eaque
+          consequuntur odit culpa quae est repudiandae consequatur doloribus
+          sequi maiores. Suscipit, aliquam! Lorem ipsum dolor sit amet
+        </p>
+      </div>
+    </div>
+
+    <div>
+      <hr />
+      <a href="/" class="flex items-center gap-2 py-4">
+        <img
+          src="/logo_small.png"
+          alt="logo de GitHub"
+          class="size-6 object-cover rounded-full"
+        />
+
+        <span class="text-xs">GitHub</span>
+      </a>
+
+      <div>
+        <span class="border px-1 rounded-sm text-xs">React</span>
+        <span class="border px-1 rounded-sm text-xs">Next JS</span>
+        <span class="border px-1 rounded-sm text-xs">Astro</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="aspect-video bg-red-300 col-span-2">
+    <img
+      src={ImageSisReport.src}
+      alt="imagen del proyecto"
+      class="object-cover"
+    />
+  </div>
+
+  <div class="gap-4 grid place-content-center relative place-items-center">
+    <div class="text-8xl font-semibold">
+      <span class="-translate-y-8 inline-block">1</span>/<span
+        class="translate-y-8 inline-block">8</span
+      >
+    </div>
+
+    <div class="w-full absolute bottom-0 flex gap-2">
+      <button class="bg-orange-400 w-full py-2 rounded-sm cursor-pointer"
+        >Anterior</button
+      >
+      <button class="bg-orange-400 w-full py-2 rounded-sm cursor-pointer"
+        >Siguiente</button
+      >
+    </div>
+
+    <a href="/" class="absolute right-0 top-0 font-semibold">Más proyectos</a>
+  </div>
+</section>

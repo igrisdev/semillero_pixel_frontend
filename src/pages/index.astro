@@ -1,5 +1,12 @@
 ---
-import Layout from "../layouts/Layout.astro";
+import Hero from '../components/home/hero.astro'
+import Projects from '../components/home/projects.astro'
+import Layout from '../layouts/Layout.astro'
 ---
 
-<Layout> hola </Layout>
+<Layout>
+  <Hero />
+  <Projects />
+
+  <div class="h-[300vh]"></div>
+</Layout>

@@ -1,0 +1,13 @@
+<svg width='100' height='100' viewBox='0 0 100 100' fill='none'>
+  <g clip-path='url(#clip0_164_132)'>
+    <path
+      d='M0 50V100H50H100V50V-1.52588e-05H50H0V50ZM17 11.5V17H11.5H6V11.5V5.99998H11.5H17V11.5ZM77 50V77H50H23V50V23H50H77V50Z'
+      fill='currentColor'></path>
+    <path d='M31 36V41H36H41V36V31H36H31V36Z' fill='currentColor'></path>
+  </g>
+  <defs>
+    <clipPath id='clip0_164_132'>
+      <rect width='100' height='100' fill='white'></rect>
+    </clipPath>
+  </defs>
+</svg>

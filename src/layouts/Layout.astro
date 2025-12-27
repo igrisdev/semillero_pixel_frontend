@@ -1,22 +1,25 @@
+---
+import '../styles/global.css'
+
+import Navbar from '../components/core/navbar.astro'
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
-</html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Semillero Pixel</title>
+  </head>
+  <body>
+    <Navbar />
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
-</style>
+    <slot />
+    <div
+      style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-color: #ffffff; background-image: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 100%), url(&quot;data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Crect x='2' y='2' width='4' height='4' fill='%2394a3b8' fill-opacity='0.2'/%3E%3Crect x='22' y='22' width='4' height='4' fill='%2394a3b8' fill-opacity='0.2'/%3E%3C/svg%3E&quot;);"
+    >
+    </div>
+  </body>
+</html>

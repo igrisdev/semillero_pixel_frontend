@@ -1,0 +1,103 @@
+@import 'tailwindcss';
+/* @plugin "@tailwindcss/typography"; */
+
+/*
+#459b5b verde oscuro
+#75bd49 verde claro
+#f46b18 naranja oscuro
+#fd9e27 naranja claro
+ */
+
+@theme {
+  --primary: #f46b18;
+  --secondary: #fd9e27;
+  --accent: #4888ff;
+  --tertiary: #5b5b5b;
+  --quaternary: #c8c8c8;
+
+  --color-theme-background: var(--primary);
+  --color-theme-title: var(--secondary);
+  --color-theme-title-secondary: var(--primary);
+  --color-theme-text: var(--tertiary);
+  --color-theme-decoration: var(--accent);
+  --color-theme-split: var(--quaternary);
+  --color-theme-icon: var(--tertiary);
+
+  --font-fallback: 'Adjusted Arial Fallback', system-ui;
+  --font-micro5: 'Micro5';
+  --font-poppins: 'Poppins';
+}
+
+.dark {
+  --primary: #050714;
+  --secondary: #ffffff;
+  --accent: #92a6ff;
+  --tertiary: #c8c8c8;
+  --quaternary: #5b5b5b;
+}
+
+@font-face {
+  font-family: 'Adjusted Arial Fallback';
+  src: local(Arial);
+  size-adjust: 112%;
+  ascent-override: 74%;
+  descent-override: normal;
+  line-gap-override: normal;
+}
+
+@font-face {
+  font-family: 'Micro5';
+  src: url('/fonts/Micro_5/Micro5-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/fonts/Poppins/Poppins-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
+
+html {
+  font-family: 'Poppins', var(--font-fallback);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+html,
+body {
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  scroll-behavior: none;
+}
