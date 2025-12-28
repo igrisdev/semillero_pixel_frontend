@@ -2,12 +2,12 @@
 
 ---
 
-<header class="grid grid-cols-3 px-4 gap-8 max-w-7xl mx-auto mt-20">
-  <section class="col-span-2 flex flex-col justify-between gap-4 pb-2">
-    <h1
-      id="title"
-      class="font-micro5 text-[167px] uppercase leading-20 text-orange-600"
-    >
+<header class="grid grid-cols-3 px-4 gap-8 max-w-7xl mx-auto mt-5 md:mt-20">
+  <section
+    id="title-container"
+    class="col-span-3 md:col-span-2 flex flex-col justify-between gap-4 pb-2 text-[clamp(2rem,17vw,10rem)] md:text-[clamp(1rem,12vw,10rem)]"
+  >
+    <h1 id="title" class="font-micro5 uppercase leading-20 text-orange-600">
       Semillero Pixel
     </h1>
 
@@ -18,8 +18,11 @@
     </div>
   </section>
 
-  <section class="flex items-center">
-    <p class="text-pretty text-sm">
+  <section
+    id="description-container"
+    class="col-span-3 md:col-span-1 flex items-center"
+  >
+    <p id="description" class="text-pretty text-sm">
       Somos un semillero enfocado en la investigación y el desarrollo de
       proyectos web. Deseamos impactar el mundo de la web y crear soluciones
       innovadoras para mejorar la experiencia de los usuarios.
@@ -27,24 +30,52 @@
   </section>
 </header>
 
+<style>
+  #title {
+  }
+</style>
+
 <script>
   import { gsap } from 'gsap'
   import { ScrollTrigger } from 'gsap/ScrollTrigger'
+  import { SplitText } from 'gsap/SplitText'
 
   gsap.registerPlugin(ScrollTrigger)
 
-  // document.fonts.ready.then(() => {
-  //   gsap.to('#title, #title-decoration', {
-  //     y: -100,
-  //     x: -1000,
-  //     opacity: 0,
-  //     scrollTrigger: {
-  //       trigger: '#title',
-  //       start: 'top 10%',
-  //       end: 'bottom top',
-  //       scrub: 1,
-  //       markers: true,
-  //     },
-  //   })
-  // })
+  let splitTitle = SplitText.create('#title', { type: 'words, chars' })
+
+  gsap.from('#title-decoration', {
+    duration: 0.5,
+    y: 100,
+    stagger: 0.05,
+  })
+
+  gsap.from(splitTitle.chars, {
+    duration: 1,
+    y: -100,
+    autoAlpha: 0,
+    stagger: 0.05,
+  })
+
+  gsap.to('#title-container', {
+    x: -200,
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '#title',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+  })
+
+  gsap.to('#description-container', {
+    x: 200,
+    opacity: 0,
+    scrollTrigger: {
+      trigger: '#description',
+      start: 'top top',
+      end: 'bottom top',
+      scrub: true,
+    },
+  })
 </script>

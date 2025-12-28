@@ -2,22 +2,81 @@
 
 ---
 
-<nav class="justify-between flex h-20 items-center px-4 max-w-7xl mx-auto">
+<nav
+  id="static-nav"
+  class="justify-between flex h-20 items-center px-4 max-w-7xl mx-auto relative z-10"
+>
   <section>
-    <div class="h-14">
-      <img src="/logo_small.png" alt="logo semillero pixel" class="h-full" />
+    <div class="h-14" id="logo">
+      <a href="/">
+        <img src="/logo_big.png" alt="logo" class="h-full object-contain" />
+      </a>
     </div>
   </section>
 
-  <ul class="flex items-center gap-4">
+  <ul class="flex items-center gap-4" id="menu">
     <li><a href="/">Inicio</a></li>
     <li><a href="/about">Proyectos</a></li>
-    <li><a href="/contact">Ultimas Publicaciones</a></li>
-    <li><a href="/contact">Eventos</a></li>
-    <li><a href="/contact">Integrantes</a></li>
+    <li><a href="/contact">Publicaciones</a></li>
   </ul>
-
-  <section>
-    <button>Contactar</button>
-  </section>
 </nav>
+
+<div
+  id="floating-menu"
+  class="fixed top-6 left-1/2 -translate-x-1/2 scale-0 opacity-0 bg-black/10 backdrop-blur-md px-6 py-3 rounded-full text-black shadow-2xl z-50 border border-white/10 origin-top pointer-events-none"
+>
+  <ul class="flex items-center gap-6 text-sm font-medium">
+    <li>
+      <a href="/" class="hover:text-cyan-400 transition-colors">Inicio</a>
+    </li>
+    <li>
+      <a href="/about" class="hover:text-cyan-400 transition-colors"
+        >Proyectos</a
+      >
+    </li>
+    <li>
+      <a href="/contact" class="hover:text-cyan-400 transition-colors"
+        >Contacto</a
+      >
+    </li>
+  </ul>
+</div>
+
+<script>
+  import { gsap } from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  gsap.from('#logo, #menu > li', {
+    duration: 1,
+    opacity: 0,
+    y: -30,
+    stagger: 0.1,
+    ease: 'power3.out',
+  })
+
+  gsap.to('#floating-menu', {
+    scale: 1,
+    opacity: 1,
+    pointerEvents: 'all',
+    ease: 'back.out(1.2)',
+    scrollTrigger: {
+      trigger: 'body',
+      start: '30px top',
+      end: '150px top',
+      scrub: true,
+    },
+  })
+
+  gsap.to('#static-nav', {
+    opacity: 0,
+    y: -30,
+    scrollTrigger: {
+      trigger: 'body',
+      start: 'top top',
+      end: '80px top',
+      scrub: true,
+    },
+  })
+</script>
