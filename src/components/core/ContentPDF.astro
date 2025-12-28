@@ -1,0 +1,43 @@
+---
+const { PDF } = Astro.props
+
+if (!PDF || PDF === '') {
+  return Astro.redirect('/404')
+}
+---
+
+<div class="relative w-full h-[80vh]">
+  <object data={PDF} type="application/pdf" class="w-full h-full">
+    <p>
+      Tu navegador no soporta la visualización directa de PDF. Puedes descargar
+      el PDF <a href={PDF} download class="underline text-green-200">aquí</a>.
+    </p>
+  </object>
+</div>
+
+<!-- <iframe src={PDF} frameborder='0' class='w-full h-full'></iframe> -->
+
+<!-- <input type='hidden' name='PDF' value={PDF} /> -->
+
+<!-- <canvas id='the-canvas'></canvas>
+
+<script>
+  var url = document.querySelector('input[name="PDF"]').value
+
+  pdfjsLib.getDocument(url).promise.then(function (pdf) {
+    pdf.getPage(1).then(function (page) {
+      var scale = 1.5
+      var viewport = page.getViewport({ scale: scale })
+      var canvas = document.getElementById('the-canvas')
+      var context = canvas.getContext('2d')
+      canvas.height = viewport.height
+      canvas.width = viewport.width
+
+      var renderContext = {
+        canvasContext: context,
+        viewport: viewport,
+      }
+      page.render(renderContext)
+    })
+  })
+</script> -->

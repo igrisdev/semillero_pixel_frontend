@@ -4,11 +4,18 @@
 
 <header class="grid grid-cols-3 px-4 gap-8 max-w-7xl mx-auto mt-20">
   <section class="col-span-2 flex flex-col justify-between gap-4 pb-2">
-    <h1 class="font-micro5 text-[167px] uppercase leading-20">
+    <h1
+      id="title"
+      class="font-micro5 text-[167px] uppercase leading-20 text-orange-600"
+    >
       Semillero Pixel
     </h1>
 
-    <div class="border-y-2 h-2 border-dashed"></div>
+    <div
+      id="title-decoration"
+      class="border-y-2 h-2 border-dashed border-orange-600"
+    >
+    </div>
   </section>
 
   <section class="flex items-center">
@@ -19,3 +26,25 @@
     </p>
   </section>
 </header>
+
+<script>
+  import { gsap } from 'gsap'
+  import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  // document.fonts.ready.then(() => {
+  //   gsap.to('#title, #title-decoration', {
+  //     y: -100,
+  //     x: -1000,
+  //     opacity: 0,
+  //     scrollTrigger: {
+  //       trigger: '#title',
+  //       start: 'top 10%',
+  //       end: 'bottom top',
+  //       scrub: 1,
+  //       markers: true,
+  //     },
+  //   })
+  // })
+</script>
