@@ -1,14 +1,18 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import Hero from '@components/hero.astro'
-import Projects from '@modules/projects/ui/projects.astro'
 import Articles from '@modules/publications/ui/articles.astro'
 import Events from '@modules/events/ui/events.astro'
+import { ProjectsSlider } from '@modules/projects/ui/projects_slider'
+
+import { getProjectsForHome } from '@modules/projects/aplication/get_projects_for_home'
+
+const projects = await getProjectsForHome()
 ---
 
 <Layout>
   <Hero />
-  <Projects />
+  <ProjectsSlider client:load initialProjects={projects} />
   <Articles />
   <Events />
 </Layout>
