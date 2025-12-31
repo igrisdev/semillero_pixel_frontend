@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { SplitText } from 'gsap/SplitText'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 import type { Project } from '../domain/projects.domain'
-
 import ImageSisReport from '@assets/projects/sisreport.jpg'
 
 interface Props {
@@ -12,21 +12,20 @@ interface Props {
 }
 
 export const ProjectsSlider = ({ initialProjects }: Props) => {
-  // Lógica para que funcione el slider
   const projects = initialProjects
+  const containerRef = useRef<HTMLElement>(null)
 
   const [currentProject, setCurrentProject] = useState<number>(0)
   const [isPaused, setIsPaused] = useState<boolean>(false)
 
+  // --- Lógica del Timer ---
   useEffect(() => {
     if (!projects || projects.length === 0) return
     if (isPaused) return
 
     const interval = setInterval(() => {
       setCurrentProject((prevIndex) => {
-        if (prevIndex === projects.length - 1) {
-          return 0
-        }
+        if (prevIndex === projects.length - 1) return 0
         return prevIndex + 1
       })
     }, 3000)
@@ -34,109 +33,162 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
     return () => clearInterval(interval)
   }, [currentProject, projects.length, isPaused])
 
-  if (!projects || projects.length === 0) {
-    return null
-  }
+  if (!projects || projects.length === 0) return null
 
   const activeProject = projects[currentProject]
-
-  function handleNextProject() {
-    if (currentProject < projects.length - 1) {
-      setCurrentProject((prev) => prev + 1)
-    }
-  }
-
-  function handlePreviousProject() {
-    if (currentProject > 0) {
-      setCurrentProject((prev) => prev - 1)
-    }
-  }
-
   const isFirst = currentProject === 0
   const isLast = currentProject === projects.length - 1
 
-  // Lógica de las animaciones
-  useGSAP(() => {
-    gsap.registerPlugin(SplitText)
+  function handleNextProject() {
+    if (!isLast) setCurrentProject((prev) => prev + 1)
+  }
 
-    const tl = gsap.timeline()
+  function handlePreviousProject() {
+    if (!isFirst) setCurrentProject((prev) => prev - 1)
+  }
 
-    // Animación de la información del proyecto
-    tl.from('.slider-project', {
-      opacity: 0,
-      x: '100%',
-      duration: 0.6,
-    })
+  useGSAP(
+    () => {
+      if (!containerRef.current) return
 
-    tl.from(
-      '.slider',
-      {
-        y: '-100%',
+      gsap.registerPlugin(SplitText)
+
+      gsap.set(
+        '.slider-project, .slider, .slider-description, .slider-github, .slider-technology, .control-current-number',
+        {
+          clearProps: 'all',
+        }
+      )
+
+      const tl = gsap.timeline()
+
+      // Etiqueta Proyecto
+      tl.fromTo(
+        '.slider-project',
+        { x: '-100%', opacity: 0 },
+        { x: '0%', opacity: 1, duration: 0.6, ease: 'back.out(1.7)' }
+      )
+
+      // Título
+      tl.fromTo(
+        '.slider',
+        { y: '-100%', opacity: 0 },
+        {
+          y: '0%',
+          opacity: 1,
+          duration: 0.6,
+          ease: 'back.out(1.7)',
+          stagger: 0.2,
+        },
+        '-=0.4'
+      )
+
+      // Descripción
+      tl.fromTo(
+        '.slider-description',
+        { y: '50%', opacity: 0 },
+        { y: '0%', opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+        '-=0.4'
+      )
+
+      // Github Button
+      tl.fromTo(
+        '.slider-github',
+        { scale: 0.5, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 0.6, ease: 'back.out(1.7)' },
+        '-=0.4'
+      )
+
+      // Tecnologías
+      tl.fromTo(
+        '.slider-technology',
+        { scale: 0.5, y: '50%', opacity: 0 },
+        {
+          scale: 1,
+          y: '0%',
+          opacity: 1,
+          duration: 0.5,
+          ease: 'back.out(2)',
+          stagger: 0.1,
+        },
+        '<'
+      )
+
+      // Imagen (Blur Effect)
+      gsap.fromTo(
+        '.slider-image',
+        { filter: 'blur(10px)', scale: 1.2, opacity: 0 },
+        {
+          filter: 'blur(0px)',
+          scale: 1,
+          opacity: 1,
+          duration: 0.8,
+          ease: 'power2.out',
+        }
+      )
+
+      // Número
+      gsap.fromTo(
+        '.control-current-number',
+        { y: -100, opacity: 0 },
+        { y: -20, opacity: 1, duration: 0.5, ease: 'back.out(1.7)' }
+      )
+    },
+    {
+      scope: containerRef,
+      dependencies: [currentProject],
+      revertOnUpdate: true,
+    }
+  )
+
+  useGSAP(
+    () => {
+      gsap.registerPlugin(ScrollTrigger)
+
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: 'top top',
+          end: 'bottom top',
+          scrub: true,
+        },
+      })
+
+      tl.to('.slider-column-left', {
+        x: -200,
         opacity: 0,
-        duration: 0.6,
-        ease: 'back.out(1.7)',
-        stagger: 0.2,
-      },
-      '-=0.4'
-    )
-
-    tl.from(
-      '.slider-description',
-      {
-        opacity: 0,
-        y: '50%',
-        duration: 0.6,
-      },
-      '-=0.4'
-    )
-
-    tl.from(
-      '.slider-github',
-      {
-        opacity: 0,
-        scale: 1.1,
-        duration: 0.6,
-        ease: 'power2.out',
-      },
-      '-=0.4'
-    )
-
-    tl.from(
-      '.slider-technology',
-      {
-        opacity: 0,
-        scale: 0.5,
-        y: '50%',
-        duration: 0.5,
-        ease: 'back.out(2)',
-        stagger: 0.1,
-      },
-      '<'
-    )
-
-    // Animación de la imagen
-    gsap.from('.slider-image', {
-      filter: 'blur(10px)',
-      scale: 1.2,
-      duration: 0.5,
-    })
-
-    gsap.from('.control-current-number', {
-      y: '-100%',
-      opacity: 1,
-      duration: 0.5,
-    })
-
-    // animación de los controles
-  }, [currentProject])
+        ease: 'none',
+      })
+        .to(
+          '.slider-column-center',
+          {
+            y: -200,
+            opacity: 0,
+            ease: 'none',
+          },
+          '<'
+        )
+        .to(
+          '.slider-column-right',
+          {
+            x: 200,
+            opacity: 0,
+            ease: 'none',
+          },
+          '<'
+        )
+    },
+    { scope: containerRef }
+  )
 
   return (
     <section
+      ref={containerRef}
       className="mx-auto mt-20 grid max-w-7xl grid-cols-4 gap-4 px-4"
       id="projects"
     >
       {/* --- COLUMNA IZQUIERDA --- */}
-      <div className="flex flex-col justify-between gap-2">
+      <div className="slider-column-left flex flex-col justify-between gap-2">
         <div className="flex flex-col gap-2">
           <div className="overflow-hidden">
             <div className="slider-project inline-block">
@@ -146,8 +198,8 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
             </div>
           </div>
 
-          <div className="overflow-hidden">
-            <h2 className="slider text-2xl font-semibold">
+          <div className="overflow-hidden py-1">
+            <h2 className="slider inline-block text-2xl font-semibold">
               {activeProject.title_project}
             </h2>
           </div>
@@ -159,7 +211,7 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
             onTouchStart={() => setIsPaused(true)}
             onTouchEnd={() => setIsPaused(false)}
           >
-            <p className="slider-description text-sm">
+            <p className="slider-description block text-sm">
               {activeProject.description_project}
             </p>
           </div>
@@ -185,7 +237,7 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
             {activeProject.technology_project.map((technology, index) => (
               <span
                 key={`${technology.title_technology_project}-${index}`}
-                className="slider-technology rounded-sm border px-1 text-xs"
+                className="slider-technology inline-block rounded-sm border bg-white px-1 text-xs"
               >
                 {technology.title_technology_project}
               </span>
@@ -195,7 +247,7 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
       </div>
 
       {/* --- COLUMNA CENTRAL (IMAGEN) --- */}
-      <div className="col-span-2 aspect-video overflow-hidden">
+      <div className="slider-column-center col-span-2 aspect-video overflow-hidden rounded-sm bg-gray-100">
         <img
           key={activeProject.image_project}
           src={activeProject.image_project || ImageSisReport.src}
@@ -205,12 +257,13 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
       </div>
 
       {/* --- COLUMNA DERECHA (CONTROLES) --- */}
-      <div className="relative grid place-content-center place-items-center gap-4">
+      <div className="slider-column-right relative grid place-content-center place-items-center gap-4">
         <div className="text-8xl font-semibold">
-          <span className="control-current-number inline-block -translate-y-8">
+          <span className="control-current-number inline-block">
             {currentProject + 1}
           </span>
-          /<span className="inline-block translate-y-8">{projects.length}</span>
+          <span>/</span>
+          <span className="inline-block translate-y-10">{projects.length}</span>
         </div>
 
         <div className="absolute bottom-0 flex w-full gap-2">
