@@ -16,12 +16,10 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
   const projects = initialProjects
 
   const [currentProject, setCurrentProject] = useState<number>(0)
-
   const [isPaused, setIsPaused] = useState<boolean>(false)
 
   useEffect(() => {
     if (!projects || projects.length === 0) return
-
     if (isPaused) return
 
     const interval = setInterval(() => {
@@ -58,19 +56,80 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
   const isLast = currentProject === projects.length - 1
 
   // Lógica de las animaciones
+  useGSAP(() => {
+    gsap.registerPlugin(SplitText)
 
-  // useGSAP(() => {
-  //   gsap.registerPlugin(SplitText)
+    const tl = gsap.timeline()
 
-  //   // const splitSliderTitle = SplitText()
+    // Animación de la información del proyecto
+    tl.from('.slider-project', {
+      opacity: 0,
+      x: '100%',
+      duration: 0.6,
+    })
 
-  //   gsap.from('.slider-title', {
-  //     y: '-100%',
-  //     opacity: 0,
-  //     duration: 0.5,
-  //     ease: 'power2.out',
-  //   })
-  // }, [currentProject])
+    tl.from(
+      '.slider',
+      {
+        y: '-100%',
+        opacity: 0,
+        duration: 0.6,
+        ease: 'back.out(1.7)',
+        stagger: 0.2,
+      },
+      '-=0.4'
+    )
+
+    tl.from(
+      '.slider-description',
+      {
+        opacity: 0,
+        y: '50%',
+        duration: 0.6,
+      },
+      '-=0.4'
+    )
+
+    tl.from(
+      '.slider-github',
+      {
+        opacity: 0,
+        scale: 1.1,
+        duration: 0.6,
+        ease: 'power2.out',
+      },
+      '-=0.4'
+    )
+
+    tl.from(
+      '.slider-technology',
+      {
+        opacity: 0,
+        scale: 0.5,
+        y: '50%',
+        duration: 0.5,
+        ease: 'back.out(2)',
+        stagger: 0.1,
+      },
+      '<'
+    )
+
+    // Animación de la imagen
+    gsap.from('.slider-image', {
+      filter: 'blur(10px)',
+      scale: 1.2,
+      duration: 0.5,
+    })
+
+    gsap.from('.control-current-number', {
+      y: '-100%',
+      opacity: 1,
+      duration: 0.5,
+    })
+
+    // animación de los controles
+  }, [currentProject])
+
   return (
     <section
       className="mx-auto mt-20 grid max-w-7xl grid-cols-4 gap-4 px-4"
@@ -79,15 +138,19 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
       {/* --- COLUMNA IZQUIERDA --- */}
       <div className="flex flex-col justify-between gap-2">
         <div className="flex flex-col gap-2">
-          <div>
-            <span className="font-micro5 rounded-sm border px-2 text-2xl text-orange-600 uppercase">
-              Proyecto
-            </span>
+          <div className="overflow-hidden">
+            <div className="slider-project inline-block">
+              <span className="font-micro5 rounded-sm border px-2 text-2xl text-orange-600 uppercase">
+                Proyecto
+              </span>
+            </div>
           </div>
 
-          <h2 className="slider slider-title text-2xl font-semibold">
-            {activeProject.title_project}
-          </h2>
+          <div className="overflow-hidden">
+            <h2 className="slider text-2xl font-semibold">
+              {activeProject.title_project}
+            </h2>
+          </div>
 
           <div
             className="h-40 overflow-y-auto border-r-2 border-transparent pr-2 transition-colors hover:border-gray-200"
@@ -96,26 +159,33 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
             onTouchStart={() => setIsPaused(true)}
             onTouchEnd={() => setIsPaused(false)}
           >
-            <p className="text-sm">{activeProject.description_project}</p>
+            <p className="slider-description text-sm">
+              {activeProject.description_project}
+            </p>
           </div>
         </div>
 
         <div>
           <hr />
-          <a href="/" className="flex items-center gap-2 py-4">
-            <img
-              src="/logo_small.png"
-              alt="logo de GitHub"
-              className="size-6 rounded-full object-cover"
-            />
-            <span className="text-xs">GitHub</span>
-          </a>
+          <div>
+            <a
+              href="/"
+              className="slider-github flex w-max items-center gap-2 py-4"
+            >
+              <img
+                src="/logo_small.png"
+                alt="logo de GitHub"
+                className="size-6 rounded-full object-cover"
+              />
+              <span className="text-xs">GitHub</span>
+            </a>
+          </div>
 
           <div className="flex flex-wrap gap-1">
             {activeProject.technology_project.map((technology, index) => (
               <span
                 key={`${technology.title_technology_project}-${index}`}
-                className="rounded-sm border px-1 text-xs"
+                className="slider-technology rounded-sm border px-1 text-xs"
               >
                 {technology.title_technology_project}
               </span>
@@ -125,18 +195,19 @@ export const ProjectsSlider = ({ initialProjects }: Props) => {
       </div>
 
       {/* --- COLUMNA CENTRAL (IMAGEN) --- */}
-      <div className="col-span-2 aspect-video bg-orange-600">
+      <div className="col-span-2 aspect-video overflow-hidden">
         <img
+          key={activeProject.image_project}
           src={activeProject.image_project || ImageSisReport.src}
           alt={activeProject.title_project}
-          className="h-full w-full object-cover transition-opacity duration-300"
+          className="slider-image h-full w-full object-cover"
         />
       </div>
 
       {/* --- COLUMNA DERECHA (CONTROLES) --- */}
       <div className="relative grid place-content-center place-items-center gap-4">
         <div className="text-8xl font-semibold">
-          <span className="inline-block -translate-y-8">
+          <span className="control-current-number inline-block -translate-y-8">
             {currentProject + 1}
           </span>
           /<span className="inline-block translate-y-8">{projects.length}</span>
