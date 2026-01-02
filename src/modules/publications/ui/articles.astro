@@ -4,7 +4,7 @@ import ContentPDF from '@components/ContentPDF.astro'
 ---
 
 <section class="px-4 mx-auto max-w-7xl mt-30">
-  <div class="flex gap-2 items-center">
+  <div class="publication-section-title flex gap-2 items-center">
     <div class="border-y-2 h-2 border-dashed border-orange-600 flex-1"></div>
 
     <h2 class="uppercase font-micro5 text-8xl text-orange-600">
@@ -16,25 +16,25 @@ import ContentPDF from '@components/ContentPDF.astro'
     <section class="col-span-1 border-r">
       <ul class="">
         <li class="border-b bg-gray-100">
-          <button class="text-left hover:underline">
+          <button class="publication-title text-left hover:underline">
             Arquitectura de la información aplicada en el diseño de un
             repositorio de recursos educativos de estadística
           </button>
         </li>
         <li class="border-b">
-          <button class="text-left">
+          <button class="publication-title text-left">
             Arquitectura de la información aplicada en el diseño de un
             repositorio de recursos educativos de estadística
           </button>
         </li>
         <li class="border-b">
-          <button class="text-left">
+          <button class="publication-title text-left">
             Arquitectura de la información aplicada en el diseño de un
             repositorio de recursos educativos de estadística
           </button>
         </li>
         <li class="border-b text-center py-4">
-          <a href="/">Ver Más Publicaciones</a>
+          <a href="/" class="publication-title">Ver Más Publicaciones</a>
         </li>
       </ul>
     </section>
@@ -84,3 +84,29 @@ import ContentPDF from '@components/ContentPDF.astro'
     </section>
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+
+  gsap.from('.publication-section-title', {
+    y: '120%',
+    opacity: 0,
+    duration: 1,
+  })
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  gsap.from('.publication-title', {
+    x: '-100%',
+    opacity: 0,
+    stagger: 1,
+    ease: 'power1.inOut',
+    scrollTrigger: {
+      trigger: '.publication-title',
+      start: 'bottom bottom',
+      end: 'bottom center',
+      scrub: 2,
+    },
+  })
+</script>
