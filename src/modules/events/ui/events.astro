@@ -1,41 +1,128 @@
 ---
 import ImageSisReport from '@assets/projects/sisreport.jpg'
 import ImageUniaprende from '@assets/projects/uniaprende.png'
+import ImagePrueba from '@assets/images/events/prueba/image.png'
+import ImageMember from '@assets/images/members/johan-manuel-alvarez-pinta.jpg'
+
+const allImages = [
+  ImageUniaprende,
+  ImagePrueba,
+  ImageSisReport,
+  ImageSisReport,
+  ImageMember,
+  ImageSisReport,
+  ImageUniaprende,
+  ImageSisReport,
+  ImageUniaprende,
+  ImageSisReport,
+  ImageSisReport,
+]
+
+const col1 = allImages.filter((_, i) => i % 3 === 0)
+const col2 = allImages.filter((_, i) => i % 3 === 1)
+const col3 = allImages.filter((_, i) => i % 3 === 2)
 ---
 
-<section class="max-w-7xl mx-auto px-4 py-10">
-  <div class="flex gap-2 items-center">
+<section class="max-w-7xl mx-auto px-4 py-24 overflow-hidden">
+  <div class="events-title flex gap-2 items-center mb-10">
     <h2 class="uppercase font-micro5 text-8xl text-orange-600">Eventos</h2>
-
     <div class="border-y-2 h-2 border-dashed border-orange-600 flex-1"></div>
   </div>
 
-  <div class="grid grid-cols-3 gap-4 mt-10">
-    <div class="grid gap-y-4 mt-8">
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageUniaprende.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
+  <div
+    class="gallery-wrapper grid grid-cols-1 md:grid-cols-3 gap-4 items-start"
+  >
+    <div class="parallax-col-side flex flex-col gap-4">
+      {
+        col1.map((img) => (
+          <img src={img.src} alt="Evento" class="masonry-item" loading="lazy" />
+        ))
+      }
     </div>
 
-    <div class="grid">
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
+    <div class="parallax-col-center flex flex-col gap-4">
+      {
+        col2.map((img) => (
+          <img src={img.src} alt="Evento" class="masonry-item" loading="lazy" />
+        ))
+      }
     </div>
 
-    <div class="grid gap-4 mt-8">
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
-      <img src={ImageSisReport.src} alt="" />
+    <div class="parallax-col-side flex flex-col gap-4">
+      {
+        col3.map((img) => (
+          <img src={img.src} alt="Evento" class="masonry-item" loading="lazy" />
+        ))
+      }
     </div>
   </div>
 </section>
+
+<script>
+  import gsap from 'gsap'
+  import { ScrollTrigger } from 'gsap/dist/ScrollTrigger'
+
+  gsap.registerPlugin(ScrollTrigger)
+
+  gsap.from('.events-title', {
+    y: 50,
+    opacity: 0,
+    duration: 1,
+    ease: 'power2.out',
+    scrollTrigger: {
+      trigger: '.events-title',
+      start: 'top bottom',
+      toggleActions: 'play none none reverse',
+    },
+  })
+
+  const mm = gsap.matchMedia()
+
+  mm.add('(min-width: 768px)', () => {
+    gsap.fromTo(
+      '.parallax-col-side',
+      { y: -10 },
+      {
+        y: 80,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.gallery-wrapper',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      }
+    )
+
+    gsap.fromTo(
+      '.parallax-col-center',
+      { y: 10 },
+      {
+        y: -80,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '.gallery-wrapper',
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1,
+        },
+      }
+    )
+  })
+</script>
+
+<style>
+  .masonry-item {
+    width: 100%;
+    border-radius: 0.5rem;
+    display: block;
+    filter: grayscale(100%);
+    transition: all 0.5s ease;
+  }
+
+  .masonry-item:hover {
+    filter: none;
+    transform: scale(1.02);
+    z-index: 10;
+  }
+</style>
