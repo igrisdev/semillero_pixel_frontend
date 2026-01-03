@@ -4,11 +4,11 @@ import { SplitText } from 'gsap/SplitText'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
-import type { Project } from '../domain/projects.domain'
 import ImageSisReport from '@assets/projects/sisreport.jpg'
+import type { IProject } from '../domain/project.domain'
 
 interface Props {
-  initialProjects: Project[]
+  initialProjects: IProject[]
 }
 
 export const ProjectsSlider = ({ initialProjects }: Props) => {

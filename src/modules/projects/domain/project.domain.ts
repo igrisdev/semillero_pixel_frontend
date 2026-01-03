@@ -1,9 +1,9 @@
-export interface Project {
+export interface IProject {
   title_project: string
   image_project: string
   link_github: string
   description_project: string
-  technology_project: TechnologyProject[]
+  technology_project: ITechnologyProject[]
   article_content_project: string
   person_name_article_publisher_project: string
   members: string[]
@@ -12,7 +12,7 @@ export interface Project {
   publication: string
 }
 
-export interface TechnologyProject {
+export interface ITechnologyProject {
   title_technology_project: string
   link_page_technology_project: string
 }

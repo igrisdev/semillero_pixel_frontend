@@ -1,16 +1,16 @@
 import { PROJECTS } from 'src/mockups/projects.mockup'
 
 import type { ProjectRepository } from '../domain/project_repository.domain'
-import type { Project } from '../domain/projects.domain'
+import type { IProject } from '../domain/project.domain'
 
 export class MockProjectRepository implements ProjectRepository {
-  private projects: Project[] = PROJECTS
+  private projects: IProject[] = PROJECTS
 
-  async getAllProjects(): Promise<Project[]> {
+  async getAllProjects(): Promise<IProject[]> {
     return this.projects
   }
 
-  async getProjectBySlug(slug: string): Promise<Project | null> {
+  async getProjectBySlug(slug: string): Promise<IProject | null> {
     return this.projects.find((p) => p.slug === slug) || null
   }
 }

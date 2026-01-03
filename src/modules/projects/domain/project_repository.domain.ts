@@ -1,7 +1,7 @@
-import type { Project } from '@modules/projects/domain/projects.domain'
+import type { IProject } from './project.domain'
 
 export interface ProjectRepository {
-  getAllProjects(): Promise<Project[]>
+  getAllProjects(): Promise<IProject[]>
 
-  getProjectBySlug(slug: string): Promise<Project | null>
+  getProjectBySlug(slug: string): Promise<IProject | null>
 }

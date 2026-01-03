@@ -1,8 +1,8 @@
 import ImageUniAprende from '@assets/projects/uniaprende.png'
 import ImageSisReport from '@assets/projects/sisreport.jpg'
-import type { Project } from '@modules/projects/domain/projects.domain'
+import type { IProject } from '@modules/projects/domain/project.domain'
 
-export const PROJECTS: Project[] = [
+export const PROJECTS: IProject[] = [
   {
     title_project: 'UniAprende',
     image_project: ImageUniAprende.src,
