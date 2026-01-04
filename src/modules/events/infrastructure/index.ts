@@ -1,12 +1,12 @@
-import type { IProjectRepository } from '../domain/project_repository.domain'
-import { MockProjectRepository } from './mock_projects_repository.infrastructure'
+import type { IEventRepository } from '../domain/event_repository.domain'
+import { MockEventRepository } from './mock_event_repository.infractruture'
 
 const USE_MOCK = import.meta.env.USE_MOCK === 'true'
 
-let repository: IProjectRepository
+let repository: IEventRepository
 
 // if (USE_MOCK) {
-repository = new MockProjectRepository()
+repository = new MockEventRepository()
 //   console.log('⚠️ Usando Repositorio MOCK para Proyectos');
 // } else {
 //   repository = new NotionProjectRepository();
@@ -14,4 +14,4 @@ repository = new MockProjectRepository()
 // }
 
 // Exportamos la instancia ya inicializada
-export const projectRepository = repository
+export const eventRepository = repository

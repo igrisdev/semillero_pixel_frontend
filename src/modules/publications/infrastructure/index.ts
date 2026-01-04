@@ -1,5 +1,5 @@
 import type { PublicationRepository } from '../domain/publication_repository.domain'
-import { MockPublicationRepository } from './mock_publication_repository'
+import { MockPublicationRepository } from './mock_publication_repository.infrastructure'
 
 const USE_MOCK = import.meta.env.USE_MOCK === 'true'
 

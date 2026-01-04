@@ -1,18 +1,8 @@
 import ImageVEncuentroInternacionalDeSemillerosDeInvestigacionPrexia2024_1 from '@assets/images/events/v-encuentro-internacional-de-semilleros-de-investigación-prexia-2024/1.jpg'
 import Image17CongresoColombianoDeComputación_1 from '@assets/images/events/17-congreso-colombiano-de-computacion/1.jpg'
+import type { IEvent } from '@modules/events/domain/event.domain'
 
-export interface Event {
-  events: {
-    images_event: string[]
-    date_init_event: string
-    date_end_event: string
-    title_event: string
-    slug_event: string
-  }[]
-  publication: string
-}
-
-export const EVENTS: Event[] = [
+export const EVENTS: IEvent[] = [
   {
     events: [
       {

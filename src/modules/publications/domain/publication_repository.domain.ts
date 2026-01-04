@@ -1,5 +1,5 @@
 import type { IPublication } from "./publication.domain";
 
-export interface PublicationRepository {
+export interface IPublicationRepository {
   getAllPublications(): Promise<IPublication[]>
 }

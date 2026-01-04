@@ -1,9 +1,9 @@
 import { PROJECTS } from 'src/mockups/projects.mockup'
 
-import type { ProjectRepository } from '../domain/project_repository.domain'
+import type { IProjectRepository } from '../domain/project_repository.domain'
 import type { IProject } from '../domain/project.domain'
 
-export class MockProjectRepository implements ProjectRepository {
+export class MockProjectRepository implements IProjectRepository {
   private projects: IProject[] = PROJECTS
 
   async getAllProjects(): Promise<IProject[]> {

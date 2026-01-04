@@ -4,6 +4,10 @@ import ImageUniaprende from '@assets/projects/uniaprende.png'
 import ImagePrueba from '@assets/images/events/prueba/image.png'
 import ImageMember from '@assets/images/members/johan-manuel-alvarez-pinta.jpg'
 
+import { getEventsForHome } from '@modules/events/aplication/get_events_for_home'
+
+const events = await getEventsForHome()
+
 const allImages = [
   ImageUniaprende,
   ImagePrueba,
